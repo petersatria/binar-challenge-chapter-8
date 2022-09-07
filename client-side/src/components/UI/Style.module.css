@@ -1,0 +1,26 @@
+.card {
+	background-color: #F7F7F7;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+	border-radius: 10px;
+}
+
+button {
+	font: inherit;
+	border: 1px solid #2C3333;
+	border-radius: 10px;
+	background: #2C3333;
+	color: white;
+	padding: 0.5rem 1rem;
+	margin: 1rem 0;
+	cursor: pointer;
+}
+
+button:hover,
+button:active {
+	background: #395B64;
+	border-color: #395B64;
+}
+
+button:focus {
+	outline: none;
+}
