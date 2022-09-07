@@ -1,0 +1,360 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "RESTful API",
+    "description": "This is a RESTful API"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4000/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "player",
+      "description": "All about players"
+    },
+    {
+      "name": "experience",
+      "description": "Experience of a player"
+    }
+  ],
+  "paths": {
+    "/players": {
+      "post":{
+        "tags": [
+          "player"
+        ],
+        "summary": "Create a new player",
+        "description": "Create a new player",
+        "operationId": "createPlayer",
+        "requestBody": {
+          "description": "Create a player object",
+          "content": {
+            "application/json": {
+              "schema": {
+                  "$ref": "#/components/schemas/AddUser"
+              }
+            }
+          },
+          "required":true
+        },
+        "responses": {
+          "201": {
+            "description": "Success operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserUpdate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "player"
+        ],
+        "summary": "Get all players",
+        "description": "Get all players",
+        "responses": {
+          "200": {
+            "description": "Success operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed operation"
+          }
+        }
+      }
+    },
+    "/players/{id}": {
+      "get": {
+        "tags": [
+          "player"
+        ],
+        "summary": "Get player by id",
+        "description": "",
+        "operationId": "getPlayerById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id that needs to be fetched. Use 1 for testing. ",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Id not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "player"
+        ],
+        "summary": "Update a player",
+        "description": "",
+        "operationId": "updatePlayer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id that needs to be update. Use 1 for testing. ",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PlayerUpdate"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserUpdate"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Id not found"
+          },
+          "500": {
+            "description": "Failed operation"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "player"
+        ],
+        "summary": "Delete a player",
+        "operationId": "deletePlayer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id that needs to be update. Use 1 for testing. ",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success operation"
+          },
+          "400": {
+            "description": "Failed operation"
+          }
+        }
+      }
+    },
+    "/players/exp/{id}": {
+      "post":{
+        "tags": [
+          "experience"
+        ],
+        "summary": "Add experience to a player",
+        "description": "Add experience to a player",
+        "operationId": "experiencePlayer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id that needs to be fetched. Use 1 for testing. ",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Add experience",
+          "content": {
+            "application/json": {
+              "schema": {
+                  "$ref": "#/components/schemas/Experience"
+              }
+            }
+          },
+          "required":true
+        },
+        "responses": {
+          "200": {
+            "description": "Success operation"
+          },
+          "400": {
+            "description": "Failed operation"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddUser": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "username"
+          },
+          "email": {
+            "type": "string",
+            "example": "email@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          },
+          "experience": {
+            "type": "integer",
+            "format": "int64",
+            "example": 0
+          }
+        }
+      },
+      "User": {
+        "type": "array",
+        "items":{
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64",
+              "example": 10
+            },
+            "username": {
+              "type": "string",
+              "example": "theUser"
+            },
+            "email": {
+              "type": "string",
+              "example": "john@email.com"
+            },
+            "password": {
+              "type": "string",
+              "example": "12345asd"
+            },
+            "experience": {
+              "type": "integer",
+              "format": "int64",
+              "example": 555555
+            },
+            "lvl": {
+              "type": "integer",
+              "format": "int64",
+              "example": 100
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2022-09-04T13:51:43.405Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2022-09-04T13:51:43.405Z"
+            }
+          }
+        }
+      },
+      "UserUpdate": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "username": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345asd"
+          },
+          "experience": {
+            "type": "integer",
+            "format": "int64",
+            "example": 555555
+          },
+          "lvl": {
+            "type": "integer",
+            "format": "int64",
+            "example": 100
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2022-09-04T13:51:43.405Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2022-09-04T13:51:43.405Z"
+          }
+        }
+      },
+      "Experience": {
+        "type": "object",
+        "properties": {
+          "exp": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "PlayerUpdate": {
+        "description": "Player object that needs to be updated",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UserUpdate"
+            }
+          }
+        }
+      }
+    }
+  }
+}
